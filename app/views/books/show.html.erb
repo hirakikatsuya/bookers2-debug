@@ -41,19 +41,27 @@
       </table>
       <div>
         <% @book.book_comments.each do |book_comment| %>
-          <%= link_to (book_comment.user) do %>
-            <%= image_tag book_comment.user.get_profile_image size:'50x50' %><br>
-            <%= book_comment.user.name %>
-          <% end %>
-          <%= book_comment.comment %>
-          <% if book_comment.user == current_user %>
-            <%= link_to "Destroy",book_book_comment_path(book_comment.book,book_comment),method: :delete %>
-          <% end %>
+          <div class="d-flex flex-row">
+            <div>
+            <%= link_to (book_comment.user) do %>
+              <%= image_tag book_comment.user.get_profile_image,size:"100x100"%><br>
+              <%= book_comment.user.name %>
+            <% end %>
+            </div>
+            <div class="align-self-center">
+            <%= book_comment.comment %>
+            </div>
+            <div class="align-self-center">
+            <% if book_comment.user == current_user %>
+              <%= link_to "Destroy",book_book_comment_path(book_comment.book,book_comment),method: :delete,class:"btn btn-sm btn-danger" %>
+            <% end %>
+            </div>
+          </div>
         <% end %>
       </div>
       <div>
         <%= form_with model:[@book,@book_comment] do |f| %>
-          <%= f.text_area:comment,rows:'5' %>
+          <%= f.text_area:comment,class:"form-control form-control-lg" %><br>
           <%= f.submit "送信" %>
         <% end %>
       </div>
